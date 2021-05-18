@@ -13,6 +13,15 @@ export default class extends React.Component {
   };
 
   getWeather = async(latitude, longitude) => {
+    const { data } = await axios.get(
+      `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+    );
+    //  console.log(data);
+      this.setState({ isLoading: false, temp: data.main.temp, condition: data.weather[0].main });
+  };
+
+  /* cannot find data error - let's see after making this app -> study es6
+  getWeather = async(latitude, longitude) => {
     const { 
       data: {
         main: { temp },
@@ -24,13 +33,14 @@ export default class extends React.Component {
       console.log(data);
       this.setState({
         isLoading: false, 
-      //  condition: weather[0].main, 
-      condition: "Clear",
+        condition: data.weather[0].main, 
+     // condition: "Clear",
         temp
     //    temp: data.main.temp
       });
   };
 
+*/
   getLocation = async() => {  // getting the geo information
     try {
       //throw Error();
@@ -39,11 +49,10 @@ export default class extends React.Component {
         coords : {latitude, longitude}
       } = await Location.getCurrentPositionAsync(); // getting positions(lat,lon)
       this.getWeather(latitude, longitude);
-      this.setState({ isLoading: false });
+   //   this.setState({ isLoading: false });
 
     } catch (error) {
       Alert.alert("Can't find you." , "So sad");
-
     }
   }
 
@@ -53,8 +62,6 @@ export default class extends React.Component {
 
   render() {
     const { isLoading, temp, condition } = this.state;
- //  return isLoading ? <Loading /> : <Weather temp={Math.round(temp)} condition={condition} />
-   return isLoading ? <Loading /> : <Weather temp={Math.round(temp)} condition={condition} />
- 
+   return isLoading ? <Loading /> : <Weather temp={Math.round(temp)} condition={condition} /> 
   }
 } 
