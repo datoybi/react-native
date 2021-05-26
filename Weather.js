@@ -7,47 +7,46 @@ import { LinearGradient } from 'expo-linear-gradient';
 const weatherOptions = {
     Haze: {
         iconName: "weather-hazy",
-        gradient: "['red', 'blue']"
+        gradient: ["#F3904F", "#3B4371"]
     },
     Drizzle: {
         iconName: "weather-rainy",
-        color: "['rgba(0,0,0,0.8)', 'transparent']"
+        gradient: ["#F3904F", "#3B4371"]
     },
     Rain: {
         iconName: "weather-pouring",
-        color: "['rgba(0,0,0,0.8)', 'transparent']"
+        gradient: ["#F3904F", "#3B4371"]
     },
     Snow: {
         iconName: "weather-snowy-heavy",
-        color: "['rgba(0,0,0,0.8)', 'transparent']"
+        gradient: ["#F3904F", "#3B4371"]
     },
     Atmosphere: {
         iconName: "weather-cloudy",
-        color: "['rgba(0,0,0,0.8)', 'transparent']"
-
+        gradient: ["#F3904F", "#3B4371"]
     },
     Clear: {
         iconName: "weather-sunny",
-        color: "['rgba(0,0,0,0.8)', 'transparent']"
+        gradient: ["#F3904F", "#3B4371"]
     },
     Clouds: {
         iconName: "weather-cloudy",
-        color: "['rgba(0,0,0,0.8)', 'transparent']"
+        gradient: ["#F3904F", "#3B4371"]
     },
     Mist: {
         iconName: "weather-hail",
-        gradient: "['red', 'blue']"
+        gradient: ["#F3904F", "#3B4371"]
     },
-    dust: {
+    Dust: {
         iconName: "weather-fog",
-        color: "['rgba(0,0,0,0.8)', 'transparent']"
+        gradient: ["#F3904F", "#3B4371"]
     }
 };
 
 export default function Weather({temp, condition}) {
     return (
         <LinearGradient colors={weatherOptions[condition].gradient} style={styles.container}>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="light-content" />  
             <View style={styles.halfContainer}>
                 <MaterialCommunityIcons size={96} name={weatherOptions[condition].iconName} color="white"/>
                 <Text style={styles.temp}>{temp}°</Text>
@@ -69,7 +68,7 @@ Weather.propTypes = {
         "Clouds",
         "Haze",
         "Mist",
-        "dust"
+        "Dust"
     ]).isRequired
 };
 
