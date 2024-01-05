@@ -1,11 +1,21 @@
 import { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, ScrollView, Dimensions, ActivityIndicator } from "react-native";
+import { Fontisto } from "@expo/vector-icons";
 import * as Location from "expo-location";
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 
 const API_KEY = "ec285709d299339b08f97c00916b05fa";
+const icons = {
+  Clouds: "cloudy",
+  Clear: "day-sunny",
+  Show: "snow",
+  Atmosphere: "cloudy-gusts",
+  Rain: "rains",
+  Drizzle: "rain",
+  Thunderstorm: "lightning",
+};
 
 export default function App() {
   const [city, setCity] = useState("loading...");
@@ -52,12 +62,18 @@ export default function App() {
         contentContainerStyle={styles.weather}
       >
         {days.length === 0 ? (
-          <View style={styles.day}>
+          <View style={{ ...styles.day, alignItems: "center" }}>
             <ActivityIndicator color="white" size="large" style={{ marginTop: 10 }} />
           </View>
         ) : (
           <View style={styles.day}>
-            <Text style={styles.temperature}>{parseFloat(days.main.temp).toFixed(1)}</Text>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%" }}
+            >
+              <Text style={styles.temperature}>{parseFloat(days.main.temp).toFixed(1)}</Text>
+              <Fontisto name={icons[days.weather[0].main]} size={68} color="black" />
+            </View>
+            {/* <Text style={styles.temperature}>{parseFloat(days.main.temp).toFixed(1)}</Text> */}
             <Text style={styles.description}>{days.weather[0].main}</Text>
             <Text style={styles.tinyText}>{days.weather[0].description}</Text>
           </View>
