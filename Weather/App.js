@@ -4,27 +4,44 @@ import { StyleSheet, Text, View } from "react-native";
 export default function App() {
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1, backgroundColor: "tomato" }}></View>
-      <View style={{ flex: 1.5, backgroundColor: "teal" }}></View>
-      <View style={{ flex: 1, backgroundColor: "orange" }}></View>
+      <View style={styles.city}>
+        <Text style={styles.cityName}>Seoul</Text>
+      </View>
+      <StatusBar style="auto" />
+      <View style={styles.weather}>
+        <View style={styles.day}>
+          <Text style={styles.temperature}>27</Text>
+          <Text style={styles.description}>Sunny</Text>
+        </View>
+      </View>
     </View>
   );
 }
 
-// no need display:flex
-// 기본적으로 모든 View는 flex container이다.
-// overflow 된다해도 옆으로 스크롤 할 수 없다.
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // flexDirection: "row",
+    backgroundColor: "tomato",
   },
-  text: {
-    fontSize: 28,
-    color: "blue",
+  city: {
+    flex: 1.2,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  left: {
+  cityName: { fontSize: 68, fontWeight: "500" },
+  weather: {
+    flex: 3,
+  },
+  day: {
     flex: 1,
-    backgroundColor: "red",
+    alignItems: "center",
+  },
+  temperature: {
+    marginTop: 50,
+    fontSize: 178,
+  },
+  description: {
+    marginTop: -40,
+    fontSize: 60,
   },
 });
