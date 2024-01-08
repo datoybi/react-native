@@ -1,7 +1,31 @@
-import { TextInput, View, StyleSheet } from "react-native";
+import { useState } from "react";
+
+import { TextInput, View, StyleSheet, Alert } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 
 function StartGameScreen() {
+  const [enteredNumber, setEnteredNumber] = useState("");
+
+  function numberInputHandler(enteredText) {
+    // setEnteredNumber((currentText)=>enteredText)
+    setEnteredNumber(enteredText);
+  }
+
+  function resetInputHandler() {
+    setEnteredNumber("");
+  }
+
+  function confirmInputHandler() {
+    const chosenNumber = parseInt(enteredNumber);
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert("유효하지 않은 수", "1과 99사이의 수여야 합니다.", [
+        { text: "Okay", style: "destructive", onPress: resetInputHandler },
+      ]);
+      return;
+    }
+    console.log("유효한 수!");
+  }
+
   return (
     <View style={styles.inputContainer}>
       <TextInput
@@ -10,13 +34,15 @@ function StartGameScreen() {
         keyboardType="number-pad"
         autoCapitalize="none"
         autoCorrect={false}
+        value={enteredNumber}
+        onChangeText={numberInputHandler}
       />
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
-          <PrimaryButton>Reset</PrimaryButton>
+          <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
         </View>
         <View style={styles.buttonContainer}>
-          <PrimaryButton>Confirm</PrimaryButton>
+          <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
         </View>
       </View>
     </View>
@@ -28,7 +54,6 @@ export default StartGameScreen;
 const styles = StyleSheet.create({
   inputContainer: {
     // flex: 1,
-    // justifyContent: "center",
     alignItems: "center",
     marginHorizontal: 24,
     marginTop: 100,
