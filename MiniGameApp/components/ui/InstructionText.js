@@ -7,6 +7,7 @@ export default function InstructionText({ children, style }) {
 
 const styles = StyleSheet.create({
   instructionText: {
+    fontFamily: "pretendard",
     color: Colors.accent500,
     fontSize: 24,
   },
