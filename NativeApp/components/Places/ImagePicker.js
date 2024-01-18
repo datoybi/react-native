@@ -4,7 +4,7 @@ import { launchCameraAsync, useCameraPermissions, PermissionStatus } from "expo-
 import { Colors } from "../../constants/color";
 import OutlinedButton from "../UI/OutlinedButton";
 
-function ImagePicker() {
+function ImagePicker({ onTakeImage }) {
   const [pickedImage, setPickedImage] = useState();
   const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
 
@@ -34,6 +34,7 @@ function ImagePicker() {
       quality: 0.5,
     });
     setPickedImage(image.assets[0].uri);
+    onTakeImage(image.uri);
   }
 
   let imagePreview = <Text>이미지가 없습니다.</Text>;
