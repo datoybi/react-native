@@ -30,7 +30,8 @@ function LocationPicker({ onPickLocation }) {
     async function handleLocation() {
       if (pickedLocation) {
         const address = await getAddress(pickedLocation.lat, pickedLocation.lng);
-        onPickLocation({ ...pickedLocation, address: address });
+        console.log(address);
+        onPickLocation({ ...pickedLocation, address });
       }
     }
 
@@ -40,7 +41,6 @@ function LocationPicker({ onPickLocation }) {
   async function verifyPermissions() {
     if (locationPermissionInformation.status === PermissionStatus.UNDETERMINED) {
       const permissionResponse = await requestPermission();
-
       return permissionResponse.granted;
     }
 
@@ -57,7 +57,6 @@ function LocationPicker({ onPickLocation }) {
 
   async function getLocationHandler() {
     const hasPermission = await verifyPermissions();
-
     if (!hasPermission) {
       return;
     }
