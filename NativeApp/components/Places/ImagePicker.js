@@ -2,30 +2,34 @@ import { View, Button, Alert } from "react-native";
 import { launchCameraAsync, useCameraPermissions, PermissionStatus } from "expo-image-picker";
 
 function ImagePicker() {
-  async function takeImageHandler() {
-    const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
+  const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
 
-    async function verifyPermissions() {
-      if (cameraPermissionInformation.status === PermissionStatus.UNDETERMINED) {
-        const permissionResponse = await requestPermission();
-        return permissionResponse.granted;
-      }
-
-      if (cameraPermissionInformation.status === PermissionStatus.DENIED) {
-        ALert.alert("권한이 없습니다", "카메라 접근 권한을 설정해야 합니다.");
-        return false;
-      }
-
-      return true;
+  async function verifyPermissions() {
+    if (cameraPermissionInformation.status === PermissionStatus.UNDETERMINED) {
+      const permissionResponse = await requestPermission();
+      return permissionResponse.granted;
     }
 
-    // const image = await launchCameraAsync({ allowsEditing: true, aspect: [16, 9], quality: 0.5 });
-    // console.log(image);
+    if (cameraPermissionInformation.status === PermissionStatus.DENIED) {
+      ALert.alert("권한이 없습니다", "카메라 접근 권한을 설정해야 합니다.");
+      return false;
+    }
 
-    let result = await ImagePicker.launchImageLibraryAsync({
+    return true;
+  }
+
+  async function takeImageHandler() {
+    const hasPermission = await verifyPermissions();
+    if (!hasPermission) {
+      return;
+    }
+
+    let image = await launchCameraAsync({
       allowsEditing: true,
-      quality: 1,
+      aspect: [16, 9],
+      quality: 0.5,
     });
+    console.log(image);
   }
 
   return (
