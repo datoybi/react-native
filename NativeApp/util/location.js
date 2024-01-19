@@ -1,14 +1,13 @@
-const GOOGLE_API_KEY = "AIzaSyDQUnQO3i9tbWJu1jwZeU-MeIak_BjracU";
-const GEO_KEY = "AIzaSyAFdZQAsKtQSGU_kt-EcsY0iV2yaTj9NV4";
+import { GOOGLE_API_KEY } from "@env";
 
 export function getMapPreview(lat, lng) {
-  const imagePreviewUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=14&size=400x200&key=${GEO_KEY}`;
+  const imagePreviewUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=14&size=400x200&key=${GOOGLE_API_KEY}`;
   console.log("imagePreviewUrl ", imagePreviewUrl);
   return imagePreviewUrl;
 }
 
 export async function getAddress(lat, lng) {
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GEO_KEY}`;
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_API_KEY}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Failed to fetch address");
