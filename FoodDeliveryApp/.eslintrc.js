@@ -4,7 +4,10 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   rules: {
-    'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
+    'no-shadow': 'off',
+    'no-undef': 'off',
+    'react-native/no-inline-styles': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
   },
 };
