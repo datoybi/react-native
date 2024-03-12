@@ -9,7 +9,18 @@ import Delivery from './pages/Delivery';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import {RootState} from './store/reducer';
-import {RootStackParamList} from '../App';
+
+export type LoggedInParamList = {
+  Orders: undefined;
+  Settings: undefined;
+  Delivery: undefined;
+  Complete: {orderId: string};
+};
+
+export type RootStackParamList = {
+  SignIn: undefined;
+  SignUp: undefined;
+};
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
