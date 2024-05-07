@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../App';
+import {RootStackParamList} from '../AppInner';
 import DismissKeyboardView from '../components/DismissKeyboardView';
 import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
@@ -82,7 +82,7 @@ function SignUp({navigation}: SignUpScreenProps) {
       Alert.alert('알림', '회원가입 되었습니다.');
       navigation.navigate('SignIn');
     } catch (error) {
-      const errorResponse = (error as AxiosError).response;
+      const errorResponse = (error as any).response;
       console.error(errorResponse);
       if (errorResponse) {
         Alert.alert('알림', errorResponse.data.message);

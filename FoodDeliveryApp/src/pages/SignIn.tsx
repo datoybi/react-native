@@ -13,7 +13,6 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import DismissKeyboardView from '../components/DismissKeyboardView';
 import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
-import {RootStackParamList} from '../AppInner';
 import {useAppDispatch} from '../store';
 import userSlice from '../slices/user';
 
@@ -38,8 +37,10 @@ function SignIn({navigation}: SignInScreenProps) {
   const onChangePassword = useCallback(text => {
     setPassword(text.trim());
   }, []);
+
   const onSubmit = useCallback(async () => {
     if (loading) {
+      console.log('loading');
       return;
     }
     if (!email || !email.trim()) {
@@ -49,6 +50,7 @@ function SignIn({navigation}: SignInScreenProps) {
       return Alert.alert('알림', '비밀번호를 입력해주세요.');
     }
     try {
+      console.log(email, password);
       setLoading(true);
       const response = await axios.post(`${Config.API_URL}/login`, {
         email,
@@ -68,7 +70,8 @@ function SignIn({navigation}: SignInScreenProps) {
         response.data.data.refreshToken,
       );
     } catch (error) {
-      const errorResponse = (error as AxiosError).response;
+      console.log(error);
+      const errorResponse = (error as any).response;
       if (errorResponse) {
         Alert.alert('알림', errorResponse.data.message);
       }
