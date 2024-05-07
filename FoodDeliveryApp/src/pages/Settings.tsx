@@ -30,7 +30,7 @@ function Settings() {
       await axios.post(
         `${Config.API_URL}/logout`,
         {},
-        {headers: {Authorization: `Bearer ${accessToken}`}},
+        {headers: {authorization: `Bearer ${accessToken}`}},
       );
       Alert.alert('알림', '로그아웃 되었습니다');
       dispatch(

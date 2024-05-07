@@ -37,8 +37,42 @@ function AppInner() {
   const dispatch = useAppDispatch();
   const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
   console.log('isLoggedIn', isLoggedIn);
-
   const [socket, disconnect] = useSocket();
+
+  useEffect(() => {
+    axios.interceptors.response.use(
+      response => {
+        console.log(response.data);
+        return response;
+      },
+      async error => {
+        const {
+          config,
+          response: {status},
+        } = error;
+        const originalRequest = config;
+        if (status === 419) {
+          if (error.response.data.code === 'expired') {
+            console.log('토큰 만료');
+            const token = await EncryptedStorage.getItem('refreshToken');
+            const {data} = await axios.post(
+              `${Config.API_URL}/refreshToken`,
+              {},
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              },
+            );
+            dispatch(userSlice.actions.setAccessToken(data.data.accessToken));
+            originalRequest.headers.authorization = `Bearer ${data.data.accessToken}`;
+            return axios(originalRequest);
+          }
+        }
+        return Promise.reject(error);
+      },
+    );
+  }, []);
 
   // 앱 실행 시 토큰 있으면 로그인하는 코드
   useEffect(() => {

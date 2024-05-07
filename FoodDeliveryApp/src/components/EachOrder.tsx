@@ -7,6 +7,7 @@ import Config from 'react-native-config';
 import {useSelector} from 'react-redux';
 import {RootState} from '../store/reducer';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import EncryptedStorage from 'react-native-encrypted-storage';
 import {LoggedInParamList} from '../../AppInner';
 
 function EachOrder({item}: {item: Order}) {
@@ -28,6 +29,7 @@ function EachOrder({item}: {item: Order}) {
         {headers: {authorization: `Bearer ${accessToken}`}},
       );
       dispatch(orderSlice.actions.acceptOrder(item.orderId));
+      setLoading(true);
       navigation.navigate('Delivery');
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -36,7 +38,6 @@ function EachOrder({item}: {item: Order}) {
           dispatch(orderSlice.actions.rejectOrder(item.orderId));
         }
       }
-    } finally {
       setLoading(true);
     }
   }, [item.orderId]);
