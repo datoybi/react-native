@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 // action : state를 바꾸는 행위/동작
 // dispatch : 그 액션을 실제로 실행하는 함수
