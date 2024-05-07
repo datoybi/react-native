@@ -1,14 +1,73 @@
-import React, {useState} from 'react';
-import {Pressable, Text} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {Alert, Pressable, Text, View, StyleSheet} from 'react-native';
+import {useSelector} from 'react-redux';
+import {RootState} from '../store/reducer';
+import {useAppDispatch} from '../store';
+import axios, {AxiosError} from 'axios';
+import Config from 'react-native-config';
+import userSlice from '../slices/user';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 function Settings() {
-  const [count, setCount] = useState(1);
+  const accessToken = useSelector((state: RootState) => state.user.accessToken);
+  const dispatch = useAppDispatch();
+  const onLogout = useCallback(async () => {
+    try {
+      await axios.post(
+        `${Config.API_URL}/logout`,
+        {},
+        {headers: {Authorization: `Bearer ${accessToken}`}},
+      );
+      Alert.alert('알림', '로그아웃 되었습니다');
+      dispatch(
+        userSlice.actions.setUser({
+          name: '',
+          email: '',
+          accessToken: '',
+        }),
+      );
+      await EncryptedStorage.removeItem('refreshToken');
+    } catch (error) {
+      const errorResponse = (error as AxiosError).response;
+      console.error(errorResponse);
+    }
+  }, [accessToken, dispatch]);
 
   return (
-    <Pressable onPress={() => setCount(p => p + 1)}>
-      <Text>{count}</Text>
-    </Pressable>
+    <View>
+      <View style={styles.buttonZone}>
+        <Pressable
+          style={StyleSheet.compose(
+            styles.loginButton,
+            styles.loginButtonActive,
+          )}
+          onPress={onLogout}>
+          <Text style={styles.loginButtonText}>로그아웃</Text>
+        </Pressable>
+      </View>
+    </View>
   );
 }
 
 export default Settings;
+
+const styles = StyleSheet.create({
+  buttonZone: {
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  loginButton: {
+    backgroundColor: 'gray',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  loginButtonActive: {
+    backgroundColor: 'blue',
+  },
+  loginButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+});
