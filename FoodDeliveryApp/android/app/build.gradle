@@ -132,12 +132,12 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.fooddeliveryapp"
+        applicationId "com.datoybi.fooddeliveryapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        resValue "string", "build_config_package", "com.fooddeliveryapp"
+        resValue "string", "build_config_package", "com.datoybi.fooddeliveryapp"
 
     }
     splits {
