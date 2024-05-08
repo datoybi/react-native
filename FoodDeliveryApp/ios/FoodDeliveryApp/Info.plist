@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+ <key>NSAllowsArbitraryLoads</key>
+	<true/>
+	<key>NSAllowsArbitraryLoadsInWebContent</key>
+	<true/>
+	<key>NSAllowsLocalNetworking</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -51,5 +57,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NMFClientId</key>
+	<string>h2i8u0p5gq</string>
 </dict>
 </plist>
