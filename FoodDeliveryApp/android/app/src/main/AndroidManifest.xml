@@ -10,7 +10,11 @@
       android:icon="@mipmap/ic_launcher"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
-      android:theme="@style/AppTheme">
+      android:theme="@style/AppTheme"
+			>
+			 <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="h2i8u0p5gq" />
       <activity
         android:exported="true"
         android:name=".MainActivity"
