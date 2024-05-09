@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, { useCallback, useRef, useState } from "react";
 import {
   Alert,
   Pressable,
@@ -7,47 +7,47 @@ import {
   TextInput,
   View,
   ActivityIndicator,
-} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import EncryptedStorage from 'react-native-encrypted-storage';
-import DismissKeyboardView from '../components/DismissKeyboardView';
-import axios, {AxiosError} from 'axios';
-import Config from 'react-native-config';
-import {useAppDispatch} from '../store';
-import userSlice from '../slices/user';
+} from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import EncryptedStorage from "react-native-encrypted-storage";
+import DismissKeyboardView from "../components/DismissKeyboardView";
+import axios, { AxiosError } from "axios";
+import Config from "react-native-config";
+import { useAppDispatch } from "../store";
+import userSlice from "../slices/user";
 
-type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
+type SignInScreenProps = NativeStackScreenProps<RootStackParamList, "SignIn">;
 
 export type RootStackParamList = {
   SignIn: undefined;
   SignUp: undefined;
 };
 
-function SignIn({navigation}: SignInScreenProps) {
+function SignIn({ navigation }: SignInScreenProps) {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const emailRef = useRef<TextInput | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
 
-  const onChangeEmail = useCallback(text => {
+  const onChangeEmail = useCallback((text) => {
     setEmail(text.trim());
   }, []);
-  const onChangePassword = useCallback(text => {
+  const onChangePassword = useCallback((text) => {
     setPassword(text.trim());
   }, []);
 
   const onSubmit = useCallback(async () => {
     if (loading) {
-      console.log('loading');
+      console.log("loading");
       return;
     }
     if (!email || !email.trim()) {
-      return Alert.alert('알림', '이메일을 입력해주세요.');
+      return Alert.alert("알림", "이메일을 입력해주세요.");
     }
     if (!password || !password.trim()) {
-      return Alert.alert('알림', '비밀번호를 입력해주세요.');
+      return Alert.alert("알림", "비밀번호를 입력해주세요.");
     }
     try {
       console.log(email, password);
@@ -57,23 +57,20 @@ function SignIn({navigation}: SignInScreenProps) {
         password,
       });
       console.log(response.data);
-      Alert.alert('알림', '로그인 되었습니다.');
+      Alert.alert("알림", "로그인 되었습니다.");
       dispatch(
         userSlice.actions.setUser({
           name: response.data.data.name,
           email: response.data.data.email,
           accessToken: response.data.data.accessToken,
-        }),
+        })
       );
-      await EncryptedStorage.setItem(
-        'refreshToken',
-        response.data.data.refreshToken,
-      );
+      await EncryptedStorage.setItem("refreshToken", response.data.data.refreshToken);
     } catch (error) {
       console.log(error);
-      const errorResponse = (error as any).response;
+      const errorResponse = (error as AxiosError).response;
       if (errorResponse) {
-        Alert.alert('알림', errorResponse.data.message);
+        Alert.alert("알림", (errorResponse.data as { message: string }).message);
       }
     } finally {
       setLoading(false);
@@ -81,7 +78,7 @@ function SignIn({navigation}: SignInScreenProps) {
   }, [loading, dispatch, email, password]);
 
   const toSignUp = useCallback(() => {
-    navigation.navigate('SignUp');
+    navigation.navigate("SignUp");
   }, [navigation]);
 
   const canGoNext = email && password;
@@ -131,7 +128,8 @@ function SignIn({navigation}: SignInScreenProps) {
               : styles.loginButton
           }
           disabled={!canGoNext || loading}
-          onPress={onSubmit}>
+          onPress={onSubmit}
+        >
           {loading ? (
             <ActivityIndicator color="white" />
           ) : (
@@ -155,25 +153,25 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   label: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 16,
     marginBottom: 20,
   },
   buttonZone: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   loginButton: {
-    backgroundColor: 'gray',
+    backgroundColor: "gray",
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,
     marginBottom: 10,
   },
   loginButtonActive: {
-    backgroundColor: 'blue',
+    backgroundColor: "blue",
   },
   loginButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
   },
 });
