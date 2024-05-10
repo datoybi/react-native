@@ -8,11 +8,11 @@ buildscript {
         targetSdkVersion = 33
         ndkVersion = "23.1.7779620"
 				kotlinVersion = "1.6.21"
-
     }
     repositories {
         google()
         mavenCentral()
+			
     }
     dependencies {
         classpath('com.android.tools.build:gradle:7.4.2')
@@ -25,6 +25,9 @@ allprojects {
     repositories {
         mavenCentral()
         mavenLocal()
+				maven {
+						url("https://devrepo.tmapadmin.com/repository/tmap-sdk-release/")
+        }
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url("$rootDir/../node_modules/react-native/android")
