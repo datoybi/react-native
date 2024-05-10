@@ -10,6 +10,8 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import com.datoybi.fooddeliveryapp.TMapPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+
 import java.util.List;
 public class MainApplication extends Application implements ReactApplication {
 
